@@ -9,6 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class ProductController {
     @GetMapping("")
     public String index() {
-        return "AllPermit/Producttest.html";
+        return "Product/Producttest.html";
     }
 }

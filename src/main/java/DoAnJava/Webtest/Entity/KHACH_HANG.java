@@ -19,7 +19,7 @@ public class KHACH_HANG {
     private String HoTenKH;
     @Column(name = "SDT", length = 10)
     private String SDT;
-    @Column(name = "DiaChi", length = 100)
+    @Column(name = "DiaChi")
     private String DiaChi;
     @Column(name = "Email", length = 50)
     private String Email;

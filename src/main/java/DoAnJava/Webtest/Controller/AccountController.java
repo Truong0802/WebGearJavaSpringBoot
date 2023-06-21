@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import DoAnJava.Webtest.Entity.KHACH_HANG;
 import DoAnJava.Webtest.Entity.TAI_KHOAN;
 import DoAnJava.Webtest.Repository.TAI_KHOAN_Repository;
 import DoAnJava.Webtest.Service.AccountService;
@@ -43,16 +44,24 @@ public class AccountController {
 
     @PostMapping("/signup/")
     public String handelRegister(Model model, @RequestParam(name = "username") String tk,
-            @RequestParam(name = "password") String mk) {
+            @RequestParam(name = "password") String mk, @RequestParam(name = "fullname") String HoTen,
+            @RequestParam(name = "email") String email, @RequestParam(name = "phonenumber") String phonenumber,
+            @RequestParam(name = "address") String address) {
         TAI_KHOAN taikhoan = new TAI_KHOAN();
         taikhoan.setUsername(tk);
         taikhoan.setPassword(mk);
+        KHACH_HANG khachhang = new KHACH_HANG();
+        khachhang.setUsername(taikhoan);
+        khachhang.setDiaChi(address);
+        khachhang.setEmail(email);
+        khachhang.setHoTenKH(HoTen);
+        khachhang.setSDT(phonenumber);
         System.out.println("taikhoan:" + tk);
         System.out.println("matkhau" + mk);
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String encodedPassword = passwordEncoder.encode(taikhoan.getPassword());
         taikhoan.setPassword(encodedPassword);
-        accountService.addUserWithRole(taikhoan);
+        accountService.addUserWithRole(taikhoan, khachhang);
         return "redirect:/login";
     }
 }

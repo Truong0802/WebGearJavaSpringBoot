@@ -24,15 +24,31 @@
         
         
         <div class = "signup-or"><span>OR</span></div>
-            <form class="bg-light p-4 my-3" th:object="${user}" th:action="@{/signup/}" method="post">
+            <form class="bg-light p-4 my-3"  th:action="@{/signup/}" method="post">
+                <div class = "form-group">
+                    <label for="fullname"  class="signup-label">Họ tên người dùng</label>
+                    <input type="text" name="fullname" class="signup-input" placeholder = "Họ tên người dùng" id = "fullname">
+                </div>
+                <div class = "form-group">
+                    <label for="email"  class="signup-label">Email</label>
+                    <input type="text" name="email" class="signup-input" placeholder = "Email" id = "email">
+                </div>
+                <div class = "form-group">  
+                    <label for="phone number"  class="signup-label">Số điện thoại</label>
+                    <input type="text" name="phonenumber" class="signup-input" placeholder = "Số điện thoại" id = "phonenumber">
+                </div>
+                <div class = "form-group">
+                    <label for="address"  class="signup-label">Địa chỉ</label>
+                    <input type="text" name="address" class="signup-input" placeholder = "Địa chỉ" id = "address">
+                </div>
                 <div class = "form-group">
                     <label for="username"  class="signup-label">Tài khoản</label>
-                    <input type="text" name="username" th:field=" *{username} " class="signup-input" placeholder = "Tên tài khoản" required autofocus>   
+                    <input type="text" name="username"  class="signup-input" placeholder = "Tên tài khoản" required >   
                 </div>
                 <label for="password"  class="signup-label">Mật khẩu</label>
                     <div class="password-container">
                         <label>
-                            <input type="password" name="password" th:field=" *{password} " class="signup-input" id="password" placeholder = "Mật khẩu" required>
+                            <input type="password" name="password" class="signup-input" id="password" placeholder = "Mật khẩu" required>
                             <i class="fa-solid fa-eye" id="eye" onclick="myFunction()"></i>
                         </label>
                     </div>
