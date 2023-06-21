@@ -1,0 +1,40 @@
+<!--
+
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+    <session-factory>
+        &lt;!&ndash; Database setting &ndash;&gt;
+        <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
+        <property name="connection.url">jdbc:mysql://localhost:3306/gp_system_auto?serverTimezone=UTC&amp;useUnicode=true&amp;characterEncoding=utf8</property>
+        <property name="connection.username">root</property>
+        <property name="connection.password"></property>
+        &lt;!&ndash; JDBC connection pool (use the built-in) &ndash;&gt;
+        <property name="connection.pool_size">4</property>
+
+        &lt;!&ndash; SQL dialect &ndash;&gt;
+        <property name="dialect">org.hibernate.dialect.MySQL5Dialect</property>
+
+        &lt;!&ndash; Enable Hibernate's automatic session context management &ndash;&gt;
+        <property name="current_session_context_class">thread</property>
+
+        &lt;!&ndash; Disable the second-level cache &ndash;&gt;
+        <property name="cache.provider_class">org.hibernate.cache.internal.NoCacheProvider</property>
+
+        &lt;!&ndash; Show all executed SQL to console &ndash;&gt;
+        <property name="show_sql">true</property>
+
+        &lt;!&ndash; Automatically validates or exports schema DDL to the database when the SessionFactory is created &ndash;&gt;
+        &lt;!&ndash; validate, create, update, create-drop &ndash;&gt;
+        <property name="hibernate.hbm2ddl.auto">create-drop</property>
+
+        &lt;!&ndash; Entity mapping &ndash;&gt;
+        <mapping class="com.gpcoder.models.User" />
+        <mapping class="com.gpcoder.models.Role" />
+        <mapping class="com.gpcoder.models.UserProfile" />
+        <mapping class="com.gpcoder.models.Category" />
+        <mapping class="com.gpcoder.models.Post" />
+
+    </session-factory>
+</hibernate-configuration>-->
