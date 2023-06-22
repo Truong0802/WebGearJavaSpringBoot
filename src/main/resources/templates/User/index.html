@@ -154,7 +154,7 @@
                                 <a class="nav-link me-4" href="#company-services">Services</a>
                             </li>
                             <li class="nav-item" sec:authorize="hasAnyAuthority('SALES', 'USER')">
-                                    <a class="nav-link me-4" th:href="@{/san-pham}">Product</a>
+                                    <a class="nav-link me-4" th:href="@{/san-pham/tat-ca-san-pham}">Product</a>
                                    <!-- <a class="nav-link me-4" href="#mobile-products">Products</a> -->
                             </li>
                             <li class="nav-item">
@@ -213,7 +213,9 @@
                                             </a>
                                             <ul class="dropdown-menu">
                                                 <li sec:authorize="isAuthenticated()">
-                                                    <a href="#" class="dropdown-item">Thông tin</a>
+                                                    <a sec:authorize="hasAnyAuthority('USER')" th:href="@{/thong-tin-ca-nhan?uid={uid} (uid=${#authentication.name} ) }" class="dropdown-item">Thông tin</a>
+                                    
+                                                    <a sec:authorize="hasAnyAuthority('ADMIN')" href="/admin-page" class="dropdown-item">Quản lý</a>
                                                     <a sec:logout th:href="@{/logout}" class="dropdown-item">Đăng xuất</a>
                                                 </li>
                                                 <li sec:authorize="!isAuthenticated()">
@@ -299,135 +301,19 @@
                             <div class="product-card position-relative">
                                 <div class="image-holder">
                                     <!--<a href=""><img src="images/iquinix-a80.png" alt="product-item" class="img-fluid"></a>-->
-                                    <a href=""><img th:src="@{images/} + ${product.HinhAnhSP}" alt="product-item" class="img-fluid"></a>
+                                    <a th:href="@{/san-pham/thong-tin-san-pham?id={id} (id=${product.MaSP})}"><img th:src="@{images/} + ${product.HinhAnhSP}" alt="product-item" class="img-fluid"></a>
                                 </div>
                                 <div class="card-detail d-flex justify-content-between align-items-baseline pt-3">
                                     <h3 class="card-title text-uppercase">
                                         <!--Demo lấy ra tên loại sản phẩm-->
                                         <!--<a href="#" th:text="${product.MaLoai.TenLoai}"></a> -->  
-                                        <a href="#" th:text="${product.TenSP}"></a>
+                                        <a th:href="@{/san-pham/thong-tin-san-pham?id={id} (id=${product.MaSP})}" th:text="${product.TenSP}"></a>
                                     </h3>
                                 </div>
-                                <span class="item-price" th:text="${product.Gia}"></span>
+                                <span class="item-price" th:text="${product.Gia} + ₫"></span>
                             </div>
                         </div>
-                        <!--<div class="swiper-slide">
-                            <div class="product-card position-relative">
-                                <div class="image-holder">
-                                    <a href=""><img src="images/iquinix-a80.png" alt="product-item" class="img-fluid"></a>
-                                </div>
-                                <div class="card-detail d-flex justify-content-between align-items-baseline pt-3">
-                                    <h3 class="card-title text-uppercase">
-                                        <a href="#">IQUNIX A80 Explorer Wireless RGB</a>
-                                    </h3>
-                                </div>
-                                <span class="item-price">4.450.000₫</span>
-                            </div>
-                        </div>
-                        <div class="swiper-slide">
-                            <div class="product-card position-relative">
-                                <div class="image-holder">
-                                    <a href=""><img src="images/iquinix-a80.png" alt="product-item" class="img-fluid"></a>
-                                </div>
-                                <div class="card-detail d-flex justify-content-between align-items-baseline pt-3">
-                                    <h3 class="card-title text-uppercase">
-                                        <a href="#">IQUNIX A80 Explorer Wireless RGB</a>
-                                    </h3>
-                                </div>
-                                <span class="item-price">4.450.000₫</span>
-                            </div>
-                        </div>
-                        <div class="swiper-slide">
-                            <div class="product-card position-relative">
-                                <div class="image-holder">
-                                    <a href=""><img src="images/iquinix-a80.png" alt="product-item" class="img-fluid"></a>
-                                </div>
-                                <div class="card-detail d-flex justify-content-between align-items-baseline pt-3">
-                                    <h3 class="card-title text-uppercase">
-                                        <a href="#">IQUNIX A80 Explorer Wireless RGB</a>
-                                    </h3>
-                                </div>
-                                <span class="item-price">4.450.000₫</span>
-                            </div>
-                        </div>
-                        <div class="swiper-slide">
-                            <div class="product-card position-relative">
-                                <div class="image-holder">
-                                    <a href=""><img src="images/iquinix-a80.png" alt="product-item" class="img-fluid"></a>
-                                </div>
-                                <div class="card-detail d-flex justify-content-between align-items-baseline pt-3">
-                                    <h3 class="card-title text-uppercase">
-                                        <a href="#">IQUNIX A80 Explorer Wireless RGB</a>
-                                    </h3>
-                                </div>
-                                <span class="item-price">4.450.000₫</span>
-                            </div>
-                        </div>
-                        <div class="swiper-slide">
-                            <div class="product-card position-relative">
-                                <div class="image-holder">
-                                    <a href=""><img src="images/iquinix-a80.png" alt="product-item" class="img-fluid"></a>
-                                </div>
-                                <div class="card-detail d-flex justify-content-between align-items-baseline pt-3">
-                                    <h3 class="card-title text-uppercase">
-                                        <a href="#">IQUNIX A80 Explorer Wireless RGB</a>
-                                    </h3>
-                                </div>
-                                <span class="item-price">4.450.000₫</span>
-                            </div>
-                        </div>
-                        <div class="swiper-slide">
-                            <div class="product-card position-relative">
-                                <div class="image-holder">
-                                    <a href=""><img src="images/iquinix-a80.png" alt="product-item" class="img-fluid"></a>
-                                </div>
-                                <div class="card-detail d-flex justify-content-between align-items-baseline pt-3">
-                                    <h3 class="card-title text-uppercase">
-                                        <a href="#">IQUNIX A80 Explorer Wireless RGB</a>
-                                    </h3>
-                                </div>
-                                <span class="item-price">4.450.000₫</span>
-                            </div>
-                        </div>
-                        <div class="swiper-slide">
-                            <div class="product-card position-relative">
-                                <div class="image-holder">
-                                    <a href=""><img src="images/iquinix-a80.png" alt="product-item" class="img-fluid"></a>
-                                </div>
-                                <div class="card-detail d-flex justify-content-between align-items-baseline pt-3">
-                                    <h3 class="card-title text-uppercase">
-                                        <a href="#">IQUNIX A80 Explorer Wireless RGB</a>
-                                    </h3>
-                                </div>
-                                <span class="item-price">4.450.000₫</span>
-                            </div>
-                        </div>
-                        <div class="swiper-slide">
-                            <div class="product-card position-relative">
-                                <div class="image-holder">
-                                    <a href=""><img src="images/iquinix-a80.png" alt="product-item" class="img-fluid"></a>
-                                </div>
-                                <div class="card-detail d-flex justify-content-between align-items-baseline pt-3">
-                                    <h3 class="card-title text-uppercase">
-                                        <a href="#">IQUNIX A80 Explorer Wireless RGB</a>
-                                    </h3>
-                                </div>
-                                <span class="item-price">4.450.000₫</span>
-                            </div>
-                        </div>
-                        <div class="swiper-slide">
-                            <div class="product-card position-relative">
-                                <div class="image-holder">
-                                    <a href=""><img src="images/iquinix-a80.png" alt="product-item" class="img-fluid"></a>
-                                </div>
-                                <div class="card-detail d-flex justify-content-between align-items-baseline pt-3">
-                                    <h3 class="card-title text-uppercase">
-                                        <a href="#">IQUNIX A80 Explorer Wireless RGB</a>
-                                    </h3>
-                                </div>
-                                <span class="item-price">4.450.000₫</span>
-                            </div>
-                        </div> -->
+                        
                     </div>
                 </div>
             </div>
@@ -450,133 +336,17 @@
                         <div class="swiper-slide">
                             <div class="product-card position-relative">
                                 <div class="image-holder">
-                                    <a href=""><img th:src="@{images/} + ${productCMT.HinhAnhSP}" alt="product-item" class="img-fluid"></a>
+                                    <a th:href="@{/san-pham/thong-tin-san-pham?id={id} (id=${productCMT.MaSP})}"><img th:src="@{images/} + ${productCMT.HinhAnhSP}" alt="product-item" class="img-fluid"></a>
                                 </div>
                                 <div class="card-detail d-flex justify-content-between align-items-baseline pt-3">
                                     <h3 class="card-title text-uppercase">
-                                        <a href="#" th:text="${productCMT.TenSP}"></a>
+                                        <a th:href="@{/san-pham/thong-tin-san-pham?id={id} (id=${productCMT.MaSP})} " th:text="${productCMT.TenSP}"></a>
                                     </h3>
                                 </div>
                                 <span class="item-price" th:text="${productCMT.Gia} + ₫"></span>
                             </div>
                         </div>
-                       <!-- <div class="swiper-slide">
-                            <div class="product-card position-relative">
-                                <div class="image-holder">
-                                    <a href=""><img src="images/razer-naga-v2-pro.png" alt="product-item" class="img-fluid"></a>
-                                </div>
-                                <div class="card-detail d-flex justify-content-between align-items-baseline pt-3">
-                                    <h3 class="card-title text-uppercase">
-                                        <a href="#">Razer Naga V2 Pro</a>
-                                    </h3>
-                                </div>
-                                <span class="item-price">4.790.000₫</span>
-                            </div>
-                        </div>
-                        <div class="swiper-slide">
-                            <div class="product-card position-relative">
-                                <div class="image-holder">
-                                    <a href=""><img src="images/razer-naga-v2-pro.png" alt="product-item" class="img-fluid"></a>
-                                </div>
-                                <div class="card-detail d-flex justify-content-between align-items-baseline pt-3">
-                                    <h3 class="card-title text-uppercase">
-                                        <a href="#">Razer Naga V2 Pro</a>
-                                    </h3>
-                                </div>
-                                <span class="item-price">4.790.000₫</span>
-                            </div>
-                        </div>
-                        <div class="swiper-slide">
-                            <div class="product-card position-relative">
-                                <div class="image-holder">
-                                    <a href=""><img src="images/razer-naga-v2-pro.png" alt="product-item" class="img-fluid"></a>
-                                </div>
-                                <div class="card-detail d-flex justify-content-between align-items-baseline pt-3">
-                                    <h3 class="card-title text-uppercase">
-                                        <a href="#">Razer Naga V2 Pro</a>
-                                    </h3>
-                                </div>
-                                <span class="item-price">4.790.000₫</span>
-                            </div>
-                        </div>
-                        <div class="swiper-slide">
-                            <div class="product-card position-relative">
-                                <div class="image-holder">
-                                    <a href=""><img src="images/razer-naga-v2-pro.png" alt="product-item" class="img-fluid"></a>
-                                </div>
-                                <div class="card-detail d-flex justify-content-between align-items-baseline pt-3">
-                                    <h3 class="card-title text-uppercase">
-                                        <a href="#">Razer Naga V2 Pro</a>
-                                    </h3>
-                                </div>
-                                <span class="item-price">4.790.000₫</span>
-                            </div>
-                        </div>
-                        <div class="swiper-slide">
-                            <div class="product-card position-relative">
-                                <div class="image-holder">
-                                    <a href=""><img src="images/razer-naga-v2-pro.png" alt="product-item" class="img-fluid"></a>
-                                </div>
-                                <div class="card-detail d-flex justify-content-between align-items-baseline pt-3">
-                                    <h3 class="card-title text-uppercase">
-                                        <a href="#">Razer Naga V2 Pro</a>
-                                    </h3>
-                                </div>
-                                <span class="item-price">4.790.000₫</span>
-                            </div>
-                        </div>
-                        <div class="swiper-slide">
-                            <div class="product-card position-relative">
-                                <div class="image-holder">
-                                    <a href=""><img src="images/razer-naga-v2-pro.png" alt="product-item" class="img-fluid"></a>
-                                </div>
-                                <div class="card-detail d-flex justify-content-between align-items-baseline pt-3">
-                                    <h3 class="card-title text-uppercase">
-                                        <a href="#">Razer Naga V2 Pro</a>
-                                    </h3>
-                                </div>
-                                <span class="item-price">4.790.000₫</span>
-                            </div>
-                        </div>
-                        <div class="swiper-slide">
-                            <div class="product-card position-relative">
-                                <div class="image-holder">
-                                    <a href=""><img src="images/razer-naga-v2-pro.png" alt="product-item" class="img-fluid"></a>
-                                </div>
-                                <div class="card-detail d-flex justify-content-between align-items-baseline pt-3">
-                                    <h3 class="card-title text-uppercase">
-                                        <a href="#">Razer Naga V2 Pro</a>
-                                    </h3>
-                                </div>
-                                <span class="item-price">4.790.000₫</span>
-                            </div>
-                        </div>
-                        <div class="swiper-slide">
-                            <div class="product-card position-relative">
-                                <div class="image-holder">
-                                    <a href=""><img src="images/razer-naga-v2-pro.png" alt="product-item" class="img-fluid"></a>
-                                </div>
-                                <div class="card-detail d-flex justify-content-between align-items-baseline pt-3">
-                                    <h3 class="card-title text-uppercase">
-                                        <a href="#">Razer Naga V2 Pro</a>
-                                    </h3>
-                                </div>
-                                <span class="item-price">4.790.000₫</span>
-                            </div>
-                        </div>
-                        <div class="swiper-slide">
-                            <div class="product-card position-relative">
-                                <div class="image-holder">
-                                    <a href=""><img src="images/razer-naga-v2-pro.png" alt="product-item" class="img-fluid"></a>
-                                </div>
-                                <div class="card-detail d-flex justify-content-between align-items-baseline pt-3">
-                                    <h3 class="card-title text-uppercase">
-                                        <a href="#">Razer Naga V2 Pro</a>
-                                    </h3>
-                                </div>
-                                <span class="item-price">4.790.000₫</span>
-                            </div>
-                        </div> --> 
+                      
                     </div>
                 </div>
             </div>
@@ -860,7 +630,7 @@
         <hr>
     </footer>
     <script th:src="@{/js/jquery-1.11.0.min.js}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
+    <script th:src="@{https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js}"></script>
     <script type="text/javascript" th:src="@{/js/bootstrap.bundle.min.js}"></script>
     <script type="text/javascript" th:src="@{/js/plugins.js}"></script>
     <script type="text/javascript" th:src="@{/js/script.js}"></script>

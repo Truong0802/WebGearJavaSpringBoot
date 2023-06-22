@@ -25,6 +25,7 @@ public class HomeController {
     public String index(Model model) {
         model.addAttribute("listproductBP", homeService.GetAllProductFromType(1));
         model.addAttribute("listproductCMT", homeService.GetAllProductFromType(2));
+        model.addAttribute("listproductTN", homeService.GetAllProductFromType(3));
         return "User/index.html";
     }
 }

@@ -1,5 +1,7 @@
 package DoAnJava.Webtest.Controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import DoAnJava.Webtest.Entity.KHACH_HANG;
 import DoAnJava.Webtest.Entity.TAI_KHOAN;
+import DoAnJava.Webtest.Repository.KHACH_HANG_Repository;
 import DoAnJava.Webtest.Repository.TAI_KHOAN_Repository;
 import DoAnJava.Webtest.Service.AccountService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -21,6 +24,8 @@ import jakarta.servlet.http.HttpServletResponse;
 public class AccountController {
     @Autowired
     private AccountService accountService;
+    @Autowired
+    private KHACH_HANG_Repository khach_HANG_Repository;
 
     @GetMapping("/login")
     public String loginfrm() {
@@ -63,5 +68,18 @@ public class AccountController {
         taikhoan.setPassword(encodedPassword);
         accountService.addUserWithRole(taikhoan, khachhang);
         return "redirect:/login";
+    }
+
+    @GetMapping("/thong-tin-ca-nhan") // Thông tin khách hàng
+    public String infoOfUser(Model model, @RequestParam(name = "uid") String username) {
+        System.out.println("uid: " + username);
+        KHACH_HANG a = accountService.infomation(username);
+        System.out.println("MaKH: " + a.getMaKH());
+        System.out.println("HoTenKH: " + a.getHoTenKH());
+        System.out.println("tk: " + a.getUsername().getUsername());
+        System.out.println("mk: " + a.getUsername().getPassword());
+        model.addAttribute("infolist", accountService.infomation(username));
+        return "Account/infomation.html";
+
     }
 }
