@@ -131,31 +131,47 @@
         <nav id="header-nav" class="navbar navbar-expand-lg px-3 mb-3">
             <div class="container-fluid">
                 <a class="navbar-brand" href="/">
-            <img th:src="@{/images/logo-vz.png}" width="100" class="logo">
-          </a>
+                    <img th:src="@{/images/logo-vz.png}" width="100" class="logo">
+                </a>
                 <button class="navbar-toggler d-flex d-lg-none order-3 p-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#bdNavbar" aria-controls="bdNavbar" aria-expanded="false" aria-label="Toggle navigation">
-            <svg class="navbar-icon">
-              <use xlink:href="#navbar-icon"></use>
-            </svg>
-          </button>
+                    <svg class="navbar-icon">
+                        <use xlink:href="#navbar-icon"></use>
+                    </svg>
+                </button>
                 <div class="offcanvas offcanvas-end" tabindex="-1" id="bdNavbar" aria-labelledby="bdNavbarOffcanvasLabel">
                     <div class="offcanvas-header px-4 pb-0">
-                        <a class="navbar-brand" href="/">
-                <img th:src="@{/images/logo-vz.png}" width="100" class="logo">
-              </a>
+                        <a class="navbar-brand" href="index.html">
+                            <img th:src="@{/images/logo-vz.png}" width="100" class="logo">
+                        </a>
                         <button type="button" class="btn-close btn-close-black" data-bs-dismiss="offcanvas" aria-label="Close" data-bs-target="#bdNavbar"></button>
                     </div>
                     <div class="offcanvas-body">
                         <ul id="navbar" class="navbar-nav text-uppercase justify-content-end align-items-center flex-grow-1 pe-3">
                             <li class="nav-item">
-                                <a class="nav-link me-4 active" th:href="@{/}">Home</a>
+                                <div class="widget-menu">
+                                    <div class="widget-search-bar">
+                                        <form role="search" th:action="@{/search/}" method="get" class="d-flex">
+                                            <input class="search-field" name="key" placeholder="Search" type="search">
+                                            <div class="search-icon bg-dark">
+                                                <a href="#">
+                                                    <svg class="search text-light">
+                                                        <use xlink:href="#search"></use>
+                                                    </svg>
+                                                </a>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link me-4 active" href="/">Home</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link me-4" href="#company-services">Services</a>
                             </li>
-                            <li class="nav-item" sec:authorize="hasAnyAuthority('SALES', 'USER')">
-                                    <a class="nav-link me-4" th:href="@{/san-pham/tat-ca-san-pham}">Product</a>
-                                   <!-- <a class="nav-link me-4" href="#mobile-products">Products</a> -->
+                            <li class="nav-item" >
+                                <a class="nav-link me-4" th:href="@{/san-pham/tat-ca-san-pham}">Product</a>
+                               <!-- <a class="nav-link me-4" href="#mobile-products">Products</a> -->
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link me-4" href="#smart-watches">Watches</a>
@@ -176,10 +192,10 @@
                                         <a href="blog.html" class="dropdown-item">Blog</a>
                                     </li>
                                     <li>
-                                        <a href="shop.html" class="dropdown-item">Shop</a>
+                                        <a th:href="@{/san-pham/tat-ca-san-pham}" class="dropdown-item">Shop</a>
                                     </li>
                                     <li>
-                                        <a href="cart.html" class="dropdown-item">Cart</a>
+                                        <a href="/cart" class="dropdown-item">Cart</a>
                                     </li>
                                     <li>
                                         <a href="checkout.html" class="dropdown-item">Checkout</a>
@@ -198,15 +214,8 @@
                             <li class="nav-item">
                                 <div class="user-items ps-5">
                                     <ul class="d-flex justify-content-end list-unstyled">
-                                        <li class="search-item pe-3">
-                                            <a href="#" class="search-button">
-                                                <svg class="search">
-                                                    <use xlink:href="#search"></use>
-                                                </svg>
-                                            </a>
-                                        </li>
                                         <li class="nav-item dropdown">
-                                            <a class="nav-link me-4 dropdown-toggle link-dark" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">
+                                            <a href="#"  data-bs-toggle="dropdown" class="nav-link me-4 dropdown-toggle link-dark">
                                                 <svg class="user">
                                                     <use xlink:href="#user"></use>
                                                 </svg>
@@ -224,12 +233,14 @@
                                                 </li>
                                             </ul>
                                         </li>
-                                        <li>
-                                            <a href="cart.html">
+                                        <li sec:authorize="hasAnyAuthority('USER')">
+                                            <a href="/cart">
                                                 <svg class="cart">
                                                     <use xlink:href="#cart"></use>
                                                 </svg>
+                                               
                                             </a>
+                                            (<span th:text="${session.cartCount}"></span>)
                                         </li>
                                     </ul>
                                 </div>
@@ -296,23 +307,28 @@
                     </div> -->
                 </div>
                 <div class="swiper product-swiper product-keyboard-swiper">
-                    <div class="swiper-wrapper" th:each="product:${listproductBP}">
-                        <div class="swiper-slide">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide" th:each="productBP :${listproductBP}">
                             <div class="product-card position-relative">
                                 <div class="image-holder">
-                                    <!--<a href=""><img src="images/iquinix-a80.png" alt="product-item" class="img-fluid"></a>-->
-                                    <a th:href="@{/san-pham/thong-tin-san-pham?id={id} (id=${product.MaSP})}"><img th:src="@{images/} + ${product.HinhAnhSP}" alt="product-item" class="img-fluid"></a>
+                                    <a th:href="@{/san-pham/thong-tin-san-pham?id={id} (id=${productBP.MaSP})}"><img th:src="@{/images/} + ${productBP.HinhAnhSP}" alt="product-item" class="img-fluid"></a>
                                 </div>
                                 <div class="card-detail d-flex justify-content-between align-items-baseline pt-3">
                                     <h3 class="card-title text-uppercase">
-                                        <!--Demo lấy ra tên loại sản phẩm-->
-                                        <!--<a href="#" th:text="${product.MaLoai.TenLoai}"></a> -->  
-                                        <a th:href="@{/san-pham/thong-tin-san-pham?id={id} (id=${product.MaSP})}" th:text="${product.TenSP}"></a>
+                                        <a th:href="@{/san-pham/thong-tin-san-pham?id={id} (id=${productBP.MaSP})}" th:text="${productBP.TenSP}">IQUNIX A80 Explorer Wireless RGB</a>
                                     </h3>
                                 </div>
-                                <span class="item-price" th:text="${product.Gia} + ₫"></span>
+                                <span class="item-price" th:text="${productBP.Gia} + ₫">4.450.000₫</span>
                             </div>
                         </div>
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
                         
                     </div>
                 </div>
@@ -320,7 +336,6 @@
         </div>
         <div class="swiper-pagination position-absolute text-center"></div>
     </section>
-
 
     <section id="mouse-products" class="product-store position-relative padding-large no-padding-top">
         <div class="container">
@@ -332,21 +347,29 @@
                     </div> -->
                 </div>
                 <div class="swiper product-swiper product-mouse-swiper">
-                    <div class="swiper-wrapper" th:each="productCMT :${listproductCMT}">
-                        <div class="swiper-slide">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide" th:each="productCMT :${listproductCMT}">
                             <div class="product-card position-relative">
                                 <div class="image-holder">
-                                    <a th:href="@{/san-pham/thong-tin-san-pham?id={id} (id=${productCMT.MaSP})}"><img th:src="@{images/} + ${productCMT.HinhAnhSP}" alt="product-item" class="img-fluid"></a>
+                                    <a th:href="@{/san-pham/thong-tin-san-pham?id={id} (id=${productCMT.MaSP})}"><img th:src="@{/images/} + ${productCMT.HinhAnhSP}" alt="product-item" class="img-fluid"></a>
                                 </div>
                                 <div class="card-detail d-flex justify-content-between align-items-baseline pt-3">
                                     <h3 class="card-title text-uppercase">
-                                        <a th:href="@{/san-pham/thong-tin-san-pham?id={id} (id=${productCMT.MaSP})} " th:text="${productCMT.TenSP}"></a>
+                                        <a th:href="@{/san-pham/thong-tin-san-pham?id={id} (id=${productCMT.MaSP})} " th:text="${productCMT.TenSP}">Razer Naga V2 Pro</a>
                                     </h3>
                                 </div>
-                                <span class="item-price" th:text="${productCMT.Gia} + ₫"></span>
+                                <span class="item-price" th:text="${productCMT.Gia} + ₫">4.790.000₫</span>
                             </div>
                         </div>
-                      
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
                     </div>
                 </div>
             </div>
@@ -366,136 +389,25 @@
                 </div>
                 <div class="swiper product-swiper product-headphone-swiper">
                     <div class="swiper-wrapper">
-                        <div class="swiper-slide">
+                        <div class="swiper-slide" th:each="productTN :${listproductTN}">
                             <div class="product-card position-relative">
                                 <div class="image-holder">
-                                    <a href=""><img src="images/steelseries-arctis-nova-pro.png" alt="product-item" class="img-fluid"></a>
+                                    <a th:href="@{/san-pham/thong-tin-san-pham?id={id} (id=${productTN.MaSP})}"><img th:src="@{/images/} + ${productTN.HinhAnhSP}" alt="product-item" class="img-fluid"></a>
                                 </div>
                                 <div class="card-detail d-flex justify-content-between align-items-baseline pt-3">
                                     <h3 class="card-title text-uppercase">
-                                        <a href="#">Steelseries Arctis Nova Pro Wireless</a>
+                                        <a th:href="@{/san-pham/thong-tin-san-pham?id={id} (id=${productTN.MaSP})} " th:text="${productTN.TenSP}">Steelseries Arctis Nova Pro Wireless</a>
                                     </h3>
                                 </div>
-                                <span class="item-price">10.190.000₫</span>
+                                <span class="item-price" th:text="${productTN.Gia}">10.190.000₫</span>
                             </div>
                         </div>
-                        <div class="swiper-slide">
-                            <div class="product-card position-relative">
-                                <div class="image-holder">
-                                    <a href=""><img src="images/steelseries-arctis-nova-pro.png" alt="product-item" class="img-fluid"></a>
-                                </div>
-                                <div class="card-detail d-flex justify-content-between align-items-baseline pt-3">
-                                    <h3 class="card-title text-uppercase">
-                                        <a href="#">Steelseries Arctis Nova Pro Wireless</a>
-                                    </h3>
-                                </div>
-                                <span class="item-price">10.190.000₫</span>
-                            </div>
-                        </div>
-                        <div class="swiper-slide">
-                            <div class="product-card position-relative">
-                                <div class="image-holder">
-                                    <a href=""><img src="images/steelseries-arctis-nova-pro.png" alt="product-item" class="img-fluid"></a>
-                                </div>
-                                <div class="card-detail d-flex justify-content-between align-items-baseline pt-3">
-                                    <h3 class="card-title text-uppercase">
-                                        <a href="#">Steelseries Arctis Nova Pro Wireless</a>
-                                    </h3>
-                                </div>
-                                <span class="item-price">10.190.000₫</span>
-                            </div>
-                        </div>
-                        <div class="swiper-slide">
-                            <div class="product-card position-relative">
-                                <div class="image-holder">
-                                    <a href=""><img src="images/steelseries-arctis-nova-pro.png" alt="product-item" class="img-fluid"></a>
-                                </div>
-                                <div class="card-detail d-flex justify-content-between align-items-baseline pt-3">
-                                    <h3 class="card-title text-uppercase">
-                                        <a href="#">Steelseries Arctis Nova Pro Wireless</a>
-                                    </h3>
-                                </div>
-                                <span class="item-price">10.190.000₫</span>
-                            </div>
-                        </div>
-                        <div class="swiper-slide">
-                            <div class="product-card position-relative">
-                                <div class="image-holder">
-                                    <a href=""><img src="images/steelseries-arctis-nova-pro.png" alt="product-item" class="img-fluid"></a>
-                                </div>
-                                <div class="card-detail d-flex justify-content-between align-items-baseline pt-3">
-                                    <h3 class="card-title text-uppercase">
-                                        <a href="#">Steelseries Arctis Nova Pro Wireless</a>
-                                    </h3>
-                                </div>
-                                <span class="item-price">10.190.000₫</span>
-                            </div>
-                        </div>
-                        <div class="swiper-slide">
-                            <div class="product-card position-relative">
-                                <div class="image-holder">
-                                    <a href=""><img src="images/steelseries-arctis-nova-pro.png" alt="product-item" class="img-fluid"></a>
-                                </div>
-                                <div class="card-detail d-flex justify-content-between align-items-baseline pt-3">
-                                    <h3 class="card-title text-uppercase">
-                                        <a href="#">Steelseries Arctis Nova Pro Wireless</a>
-                                    </h3>
-                                </div>
-                                <span class="item-price">10.190.000₫</span>
-                            </div>
-                        </div>
-                        <div class="swiper-slide">
-                            <div class="product-card position-relative">
-                                <div class="image-holder">
-                                    <a href=""><img src="images/steelseries-arctis-nova-pro.png" alt="product-item" class="img-fluid"></a>
-                                </div>
-                                <div class="card-detail d-flex justify-content-between align-items-baseline pt-3">
-                                    <h3 class="card-title text-uppercase">
-                                        <a href="#">Steelseries Arctis Nova Pro Wireless</a>
-                                    </h3>
-                                </div>
-                                <span class="item-price">10.190.000₫</span>
-                            </div>
-                        </div>
-                        <div class="swiper-slide">
-                            <div class="product-card position-relative">
-                                <div class="image-holder">
-                                    <a href=""><img src="images/steelseries-arctis-nova-pro.png" alt="product-item" class="img-fluid"></a>
-                                </div>
-                                <div class="card-detail d-flex justify-content-between align-items-baseline pt-3">
-                                    <h3 class="card-title text-uppercase">
-                                        <a href="#">Steelseries Arctis Nova Pro Wireless</a>
-                                    </h3>
-                                </div>
-                                <span class="item-price">10.190.000₫</span>
-                            </div>
-                        </div>
-                        <div class="swiper-slide">
-                            <div class="product-card position-relative">
-                                <div class="image-holder">
-                                    <a href=""><img src="images/steelseries-arctis-nova-pro.png" alt="product-item" class="img-fluid"></a>
-                                </div>
-                                <div class="card-detail d-flex justify-content-between align-items-baseline pt-3">
-                                    <h3 class="card-title text-uppercase">
-                                        <a href="#">Steelseries Arctis Nova Pro Wireless</a>
-                                    </h3>
-                                </div>
-                                <span class="item-price">10.190.000₫</span>
-                            </div>
-                        </div>
-                        <div class="swiper-slide">
-                            <div class="product-card position-relative">
-                                <div class="image-holder">
-                                    <a href=""><img src="images/steelseries-arctis-nova-pro.png" alt="product-item" class="img-fluid"></a>
-                                </div>
-                                <div class="card-detail d-flex justify-content-between align-items-baseline pt-3">
-                                    <h3 class="card-title text-uppercase">
-                                        <a href="#">Steelseries Arctis Nova Pro Wireless</a>
-                                    </h3>
-                                </div>
-                                <span class="item-price">10.190.000₫</span>
-                            </div>
-                        </div>
+                       
+                        
+                       
+                        
+                       
+                        
                     </div>
                 </div>
             </div>

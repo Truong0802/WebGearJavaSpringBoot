@@ -41,7 +41,6 @@ public class SecurityConfig {
                         .requestMatchers("/signup/**").permitAll()
                         .requestMatchers("/login/**", "/logout/**").permitAll()
                         .requestMatchers("/**").permitAll()
-                        .requestMatchers("/products/**").hasAnyAuthority("USER", "SALES")
                         .requestMatchers("/thong-tin-ca-nhan/**").hasAnyAuthority("USER")
                         .requestMatchers("/admin/**").hasAnyAuthority("ADMIN")
                         .anyRequest().authenticated())

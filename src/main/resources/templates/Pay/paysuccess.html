@@ -6,7 +6,7 @@
     <link rel="stylesheet" th:href="@{/css/style.css}">
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
-    <title>Trang Danh Sách Sản Phẩm</title>
+    <title>Trang chủ mua sản phẩm</title>
 </head>
 <body data-bs-spy="scroll" data-bs-target="#navbar" data-bs-root-margin="0px 0px -40%" data-bs-smooth-scroll="true" tabindex="0">
     <div class="svg-list">
@@ -164,13 +164,13 @@
                                 </div>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link me-4" href="/">Home</a>
+                                <a class="nav-link me-4 " href="/">Home</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link me-4" href="#company-services">Services</a>
                             </li>
                             <li class="nav-item" >
-                                <a class="nav-link me-4 active" th:href="@{/san-pham/tat-ca-san-pham}">Product</a>
+                                <a class="nav-link me-4 " th:href="@{/san-pham/tat-ca-san-pham}">Product</a>
                                <!-- <a class="nav-link me-4" href="#mobile-products">Products</a> -->
                             </li>
                             <li class="nav-item">
@@ -257,162 +257,19 @@
     </header>
     <br><br><br>
 
-    <section class="hero-section position-relative bg-light-blue padding-medium">
-        <div class="hero-content">
-            <div class="container">
-                <div class="row">
-                    <div class="text-center padding-large no-padding-bottom">
-                        <h1 class="display-2 text-uppercase text-dark">Shop</h1>
-                        <div class="breadcrumbs">
-                            <span class="item">
-                                <a href="/">Home</a>
-                            </span>
-                            <span class="item">Shop</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-
-    <div class="shopify-grid padding-large">
+    <br><br><br><br><br><br><br><br><br>
+    <section id="mouse-products" class="product-store position-relative padding-large no-padding-top">
         <div class="container">
-            <div class="row">
-                <main class="col-md-9">
-                    <div class="filter-shop d-flex justify-content-between">
-                        <div class="sort-by">
-                            <select id="input-sort" class="form-control" data-filter-sort="" data-filter-order="">
-                                <!-- <option value="">Default sorting</option>
-                                <option value="">Name (A - Z)</option>
-                                <option value="">Name (Z - A)</option>
-                                <option value="">Price (Low-High)</option>
-                                <option value="">Price (High-Low)</option>
-                                <option value="">Rating (Highest)</option>
-                                <option value="">Rating (Lowest)</option>
-                                <option value="">Model (A - Z)</option>
-                                <option value="">Model (Z - A)</option>    -->
-                            </select>
+            <div class="row" >
+                        <div class="swiper-slide" >
+                                <h3 class="card-title text-uppercase">
+                                    <h3>ĐẶT HÀNG THÀNH CÔNG</h3>
+                                    <span>Cảm ơn bạn đã mua hàng! Đơn hàng sẽ được đơn vị vận chuyển gửi đến bạn sớm nhất có thể!</span>
+                                    <br>
+                                    <a href="/">Quay về trang chủ</a>
+                                
+                                </h3>                      
                         </div>
-                    </div>
-                    <div class="product-content product-store d-flex justify-content-between flex-wrap" >
-                        <div class="col-lg-4 col-md-6" th:each="product:${listproduct}">
-                            <div class="product-card position-relative pe-3 pb-3">
-                                <div class="image-holder">
-                                    <a th:href="@{/san-pham/thong-tin-san-pham?id={id} (id=${product.MaSP})}"><img th:src="@{/images/} + ${product.HinhAnhSP}" alt="product-item" class="img-fluid"></a>
-                                </div>
-                                <div class="cart-concern position-absolute">
-                                    <div class="cart-button d-flex">
-                                        <div class="btn-left">
-                                            <svg class="cart-outline position-absolute">
-                                                <use xlink:href="#cart-outline"></use>
-                                            </svg>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="card-detail d-flex justify-content-between pt-3 pb-3">
-                                    <h3 class="card-title text-uppercase">
-                                        <a th:href="@{/san-pham/thong-tin-san-pham?id={id} (id=${product.MaSP})}" th:text="${product.TenSP}"></a>
-                                    </h3>
-                                </div>
-                                <span class="item-price" th:text="${product.Gia} + ₫"></span>
-                            </div>
-                        </div>
-                        
-                    </div>
-                    <nav class="navigation paging-navigation text-center padding-medium" role="navigation" th:if="${totalPages > 1}">
-                        <ul class="pagination loop-pagination d-flex justify-content-center align-items-center" >
-                            <li class="page-numbers pe-3" th:class="${listproduct.hasPrevious() ? '' : 'disabled'}">
-                                <a th:href="@{/san-pham/danh-muc-san-pham/__${type}__?page=__${listproduct.number-1}__}" aria-label="Previous">
-                                    <svg class="chevron-left pe-3" >
-                                        <use xlink:href="#chevron-left"></use>
-                                    </svg>
-                                </a>
-                            </li>
-                            <li class="page-numbers pe-3" th:each="page : ${#numbers.sequence(0, totalPages - 1)}" th:class="${listproduct.number == page ? 'current' : ''}">
-                                <a class="page-numbers pe-3" th:href="@{/san-pham/danh-muc-san-pham/__${type}__?page=__${page}__}" th:text="${page + 1}"></a>
-                            </li>
-                            <li class="page-numbers pe-3" th:class="${listproduct.hasNext() ? '' : 'disabled'}">
-                                <a th:href="@{/san-pham/danh-muc-san-pham/__${type}__?page=__${listproduct.number+1}__}" aria-label="Next">
-                                    <svg class="chevron-right ps-3">
-                                        <use xlink:href="#chevron-right"></use>
-                                    </svg>
-                                </a>
-                            </li>
-                        </ul>
-                    </nav>
-
-                   <!-- <nav class="navigation paging-navigation text-center padding-medium" role="navigation" th:if="${totalPages > 1}">
-                        <div class="pagination loop-pagination d-flex justify-content-center align-items-center" th:class="${listproduct.hasPrevious() ? '' : 'disabled'}">
-                            <a th:href="@{/san-pham/tat-ca-san-pham?page=__${listproduct.number-1}__}">
-                                <svg class="chevron-left pe-3" >
-                                    <use xlink:href="#chevron-left"></use>
-                                </svg>
-                            </a>
-                            <span aria-current="page" class="page-numbers current pe-3">1</span>
-                            <a class="page-numbers pe-3" href="#">2</a>
-                            <a class="page-numbers pe-3" href="#">3</a>
-                            <a class="page-numbers pe-3" href="#">4</a>
-                            <a class="page-numbers" href="#">5</a>
-                            <a href="#">
-                                <svg class="chevron-right ps-3">
-                                    <use xlink:href="#chevron-right"></use>
-                                </svg>
-                            </a>
-                        </div>
-                    </nav>-->
-                </main>
-                <aside class="col-md-3">
-                    <div class="sidebar">
-                        <div class="widget-menu">
-                            <div class="widget-search-bar">
-                                <form role="search" th:action="@{/search/}" method="get" class="d-flex">
-                                    <input class="search-field" name="key" placeholder="Search" type="search">
-                                        <div class="search-icon bg-dark">
-                                            <a type="submit">
-                                                <svg class="search text-light">
-                                                    <use xlink:href="#search"></use>
-                                                </svg>
-                                            </a>
-                                        </div>
-                                </form>
-                            </div>
-                        </div>
-                        <div class="widget-product-categories pt-5">
-                            <h5 class="widget-title text-decoration-underline text-uppercase">Categories</h5>
-                            <ul class="product-categories sidebar-list list-unstyled">
-                                <li class="cat-item">
-                                    <a th:href="@{/san-pham/tat-ca-san-pham}">All</a>
-                                </li>
-                                <li class="cat-item">
-                                    <a th:href="@{/san-pham/danh-muc-san-pham/{type} (type=1)}">Bàn phím</a>
-                                </li>
-                                <li class="cat-item">
-                                    <a th:href="@{/san-pham/danh-muc-san-pham/{type} (type=2)}">Chuột máy tính</a>
-                                </li>
-                                <li class="cat-item">
-                                    <a th:href="@{/san-pham/danh-muc-san-pham/{type} (type=3)}">Tai nghe</a>
-                                </li>
-                            </ul>
-                        </div>
-                       
-                    </div>
-                </aside>
-            </div>
-        </div>
-    </div>
-
-    <section id="yearly-sale" class="bg-light-blue overflow-hidden mt-5 padding-xlarge" style="background-image: url('images/sony-banner.png');background-position: right; background-repeat: no-repeat;">
-        <div class="row d-flex flex-wrap align-items-center">
-            <div class="col-md-6 col-sm-12">
-                <div class="text-content offset-4 padding-medium">
-                    <h3>16% off</h3>
-                    <h2 class="display-2 pb-5 text-uppercase text-dark">Hires Sony</h2>
-                    <h2>MDR-1AM2</h2>
-                </div>
-            </div>
-            <div class="col-md-6 col-sm-12">
-                
             </div>
         </div>
     </section>

@@ -131,31 +131,47 @@
         <nav id="header-nav" class="navbar navbar-expand-lg px-3 mb-3">
             <div class="container-fluid">
                 <a class="navbar-brand" href="/">
-            <img th:src="@{/images/logo-vz.png}" width="100" class="logo">
-          </a>
+                    <img th:src="@{/images/logo-vz.png}" width="100" class="logo">
+                </a>
                 <button class="navbar-toggler d-flex d-lg-none order-3 p-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#bdNavbar" aria-controls="bdNavbar" aria-expanded="false" aria-label="Toggle navigation">
-            <svg class="navbar-icon">
-              <use xlink:href="#navbar-icon"></use>
-            </svg>
-          </button>
+                    <svg class="navbar-icon">
+                        <use xlink:href="#navbar-icon"></use>
+                    </svg>
+                </button>
                 <div class="offcanvas offcanvas-end" tabindex="-1" id="bdNavbar" aria-labelledby="bdNavbarOffcanvasLabel">
                     <div class="offcanvas-header px-4 pb-0">
-                        <a class="navbar-brand" href="/">
-                <img th:src="@{/images/logo-vz.png}" width="100" class="logo">
-              </a>
+                        <a class="navbar-brand" href="index.html">
+                            <img th:src="@{/images/logo-vz.png}" width="100" class="logo">
+                        </a>
                         <button type="button" class="btn-close btn-close-black" data-bs-dismiss="offcanvas" aria-label="Close" data-bs-target="#bdNavbar"></button>
                     </div>
                     <div class="offcanvas-body">
                         <ul id="navbar" class="navbar-nav text-uppercase justify-content-end align-items-center flex-grow-1 pe-3">
                             <li class="nav-item">
-                                <a class="nav-link me-4" th:href="@{/}">Home</a>
+                                <div class="widget-menu">
+                                    <div class="widget-search-bar">
+                                        <form role="search" th:action="@{/search/}" method="get" class="d-flex">
+                                            <input class="search-field" name="key" placeholder="Search" type="search">
+                                            <div class="search-icon bg-dark">
+                                                <a href="#">
+                                                    <svg class="search text-light">
+                                                        <use xlink:href="#search"></use>
+                                                    </svg>
+                                                </a>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link me-4 " href="/">Home</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link me-4" href="#company-services">Services</a>
                             </li>
-                            <li class="nav-item" sec:authorize="hasAnyAuthority('SALES', 'USER')">
-                                    <a class="nav-link me-4" th:href="@{/san-pham/tat-ca-san-pham}">Product</a>
-                                   <!-- <a class="nav-link me-4" href="#mobile-products">Products</a> -->
+                            <li class="nav-item" >
+                                <a class="nav-link me-4 " th:href="@{/san-pham/tat-ca-san-pham}">Product</a>
+                               <!-- <a class="nav-link me-4" href="#mobile-products">Products</a> -->
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link me-4" href="#smart-watches">Watches</a>
@@ -176,10 +192,10 @@
                                         <a href="blog.html" class="dropdown-item">Blog</a>
                                     </li>
                                     <li>
-                                        <a href="shop.html" class="dropdown-item">Shop</a>
+                                        <a th:href="@{/san-pham/tat-ca-san-pham}" class="dropdown-item">Shop</a>
                                     </li>
                                     <li>
-                                        <a href="cart.html" class="dropdown-item">Cart</a>
+                                        <a href="/cart" class="dropdown-item">Cart</a>
                                     </li>
                                     <li>
                                         <a href="checkout.html" class="dropdown-item">Checkout</a>
@@ -198,22 +214,17 @@
                             <li class="nav-item">
                                 <div class="user-items ps-5">
                                     <ul class="d-flex justify-content-end list-unstyled">
-                                        <li class="search-item pe-3">
-                                            <a href="#" class="search-button">
-                                                <svg class="search">
-                                                    <use xlink:href="#search"></use>
-                                                </svg>
-                                            </a>
-                                        </li>
                                         <li class="nav-item dropdown">
-                                            <a class="nav-link me-4 dropdown-toggle link-dark" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">
+                                            <a href="#"  data-bs-toggle="dropdown" class="nav-link me-4 dropdown-toggle link-dark">
                                                 <svg class="user">
                                                     <use xlink:href="#user"></use>
                                                 </svg>
                                             </a>
                                             <ul class="dropdown-menu">
                                                 <li sec:authorize="isAuthenticated()">
-                                                    <a href="#" class="dropdown-item">Thông tin</a>
+                                                    <a sec:authorize="hasAnyAuthority('USER')" th:href="@{/thong-tin-ca-nhan?uid={uid} (uid=${#authentication.name} ) }" class="dropdown-item">Thông tin</a>
+                                    
+                                                    <a sec:authorize="hasAnyAuthority('ADMIN')" href="/admin-page" class="dropdown-item">Quản lý</a>
                                                     <a sec:logout th:href="@{/logout}" class="dropdown-item">Đăng xuất</a>
                                                 </li>
                                                 <li sec:authorize="!isAuthenticated()">
@@ -222,12 +233,13 @@
                                                 </li>
                                             </ul>
                                         </li>
-                                        <li>
-                                            <a href="cart.html">
+                                        <li sec:authorize="hasAnyAuthority('USER')">
+                                            <a href="/cart">
                                                 <svg class="cart">
                                                     <use xlink:href="#cart"></use>
                                                 </svg>
                                             </a>
+                                            (<span th:text="${session.cartCount}"></span>)
                                         </li>
                                     </ul>
                                 </div>

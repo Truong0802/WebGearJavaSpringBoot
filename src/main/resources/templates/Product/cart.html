@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" th:href="@{/css/style.css}">
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
-    <title>Trang Danh Sách Sản Phẩm</title>
+    <title>Document</title>
 </head>
 <body data-bs-spy="scroll" data-bs-target="#navbar" data-bs-root-margin="0px 0px -40%" data-bs-smooth-scroll="true" tabindex="0">
     <div class="svg-list">
@@ -164,7 +164,7 @@
                                 </div>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link me-4" href="/">Home</a>
+                                <a class="nav-link me-4 " href="/">Home</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link me-4" href="#company-services">Services</a>
@@ -255,7 +255,6 @@
             </div>
         </div>     
     </header>
-    <br><br><br>
 
     <section class="hero-section position-relative bg-light-blue padding-medium">
         <div class="hero-content">
@@ -267,7 +266,7 @@
                             <span class="item">
                                 <a href="/">Home</a>
                             </span>
-                            <span class="item">Shop</span>
+                            <span class="item">Cart</span>
                         </div>
                     </div>
                 </div>
@@ -276,145 +275,136 @@
     </section>
 
 
-    <div class="shopify-grid padding-large">
-        <div class="container">
+    <style>
+        .qty-number 
+        {
+            display: flex;
+            align-items: center;
+        }
+
+        .quntity-button 
+        {
+            width: 50px;
+            height: 50px;
+            background-color: #f1f1f1bd;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            font-size: 20px;
+        }
+
+        .spin-number-output 
+        {
+            width: 60px;
+            height: 50px;
+            background-color: #f1f1f1;
+            border: none;
+            text-align: center;
+            font-size: 20px;
+            margin: 0 10px;
+        }
+
+        .no-margin 
+        {
+            margin: 0;
+        }
+
+    </style>
+
+
+    <section class="shopify-cart padding-large">
+        <form th:action="@{/cart/update}" method="post" class="container">
             <div class="row">
-                <main class="col-md-9">
-                    <div class="filter-shop d-flex justify-content-between">
-                        <div class="sort-by">
-                            <select id="input-sort" class="form-control" data-filter-sort="" data-filter-order="">
-                                <!-- <option value="">Default sorting</option>
-                                <option value="">Name (A - Z)</option>
-                                <option value="">Name (Z - A)</option>
-                                <option value="">Price (Low-High)</option>
-                                <option value="">Price (High-Low)</option>
-                                <option value="">Rating (Highest)</option>
-                                <option value="">Rating (Lowest)</option>
-                                <option value="">Model (A - Z)</option>
-                                <option value="">Model (Z - A)</option>    -->
-                            </select>
-                        </div>
+                <div class="cart-header">
+                    <div class="row d-flex text-uppercase">
+                        <h3 class="cart-title col-lg-4 pb-3">Sản phẩm</h3>
+                        <h3 class="cart-title col-lg-3 pb-3">Số lượng</h3>
+                        <h3 class="cart-title col-lg-4 pb-3">Số tiền</h3>
                     </div>
-                    <div class="product-content product-store d-flex justify-content-between flex-wrap" >
-                        <div class="col-lg-4 col-md-6" th:each="product:${listproduct}">
-                            <div class="product-card position-relative pe-3 pb-3">
-                                <div class="image-holder">
-                                    <a th:href="@{/san-pham/thong-tin-san-pham?id={id} (id=${product.MaSP})}"><img th:src="@{/images/} + ${product.HinhAnhSP}" alt="product-item" class="img-fluid"></a>
-                                </div>
-                                <div class="cart-concern position-absolute">
-                                    <div class="cart-button d-flex">
-                                        <div class="btn-left">
-                                            <svg class="cart-outline position-absolute">
-                                                <use xlink:href="#cart-outline"></use>
-                                            </svg>
+                </div>
+                <div class="cart-table" th:each="cartitem : ${cartItems}">
+                    
+                    <div class="cart-item border-top border-bottom padding-small">
+                        <div class="row align-items-center">
+                            <div class="col-lg-4 col-md-3">
+                                <div class="cart-info d-flex flex-wrap align-items-center mb-4">
+                                    <div class="col-lg-5">
+                                        <div class="card-image">
+                                            <img th:src="@{/images/}+ ${cartitem.image}" alt="cloth" class="img-fluid">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="card-detail ps-3">
+                                            <h3 class="card-title text-uppercase" style="font-size: 20px;">
+                                                <a href="#" th:text="${cartitem.name}">IQUNIX A80 Explorer Wireless RGB</a>
+                                            </h3>
+                                            <div class="card-price">
+                                                <span class="money" style="font-size: 18px; color: red; font-weight: bold" th:text="${cartitem.price}+₫">4.450.000₫</span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="card-detail d-flex justify-content-between pt-3 pb-3">
-                                    <h3 class="card-title text-uppercase">
-                                        <a th:href="@{/san-pham/thong-tin-san-pham?id={id} (id=${product.MaSP})}" th:text="${product.TenSP}"></a>
-                                    </h3>
-                                </div>
-                                <span class="item-price" th:text="${product.Gia} + ₫"></span>
                             </div>
-                        </div>
-                        
-                    </div>
-                    <nav class="navigation paging-navigation text-center padding-medium" role="navigation" th:if="${totalPages > 1}">
-                        <ul class="pagination loop-pagination d-flex justify-content-center align-items-center" >
-                            <li class="page-numbers pe-3" th:class="${listproduct.hasPrevious() ? '' : 'disabled'}">
-                                <a th:href="@{/san-pham/danh-muc-san-pham/__${type}__?page=__${listproduct.number-1}__}" aria-label="Previous">
-                                    <svg class="chevron-left pe-3" >
-                                        <use xlink:href="#chevron-left"></use>
-                                    </svg>
-                                </a>
-                            </li>
-                            <li class="page-numbers pe-3" th:each="page : ${#numbers.sequence(0, totalPages - 1)}" th:class="${listproduct.number == page ? 'current' : ''}">
-                                <a class="page-numbers pe-3" th:href="@{/san-pham/danh-muc-san-pham/__${type}__?page=__${page}__}" th:text="${page + 1}"></a>
-                            </li>
-                            <li class="page-numbers pe-3" th:class="${listproduct.hasNext() ? '' : 'disabled'}">
-                                <a th:href="@{/san-pham/danh-muc-san-pham/__${type}__?page=__${listproduct.number+1}__}" aria-label="Next">
-                                    <svg class="chevron-right ps-3">
-                                        <use xlink:href="#chevron-right"></use>
-                                    </svg>
-                                </a>
-                            </li>
-                        </ul>
-                    </nav>
-
-                   <!-- <nav class="navigation paging-navigation text-center padding-medium" role="navigation" th:if="${totalPages > 1}">
-                        <div class="pagination loop-pagination d-flex justify-content-center align-items-center" th:class="${listproduct.hasPrevious() ? '' : 'disabled'}">
-                            <a th:href="@{/san-pham/tat-ca-san-pham?page=__${listproduct.number-1}__}">
-                                <svg class="chevron-left pe-3" >
-                                    <use xlink:href="#chevron-left"></use>
-                                </svg>
-                            </a>
-                            <span aria-current="page" class="page-numbers current pe-3">1</span>
-                            <a class="page-numbers pe-3" href="#">2</a>
-                            <a class="page-numbers pe-3" href="#">3</a>
-                            <a class="page-numbers pe-3" href="#">4</a>
-                            <a class="page-numbers" href="#">5</a>
-                            <a href="#">
-                                <svg class="chevron-right ps-3">
-                                    <use xlink:href="#chevron-right"></use>
-                                </svg>
-                            </a>
-                        </div>
-                    </nav>-->
-                </main>
-                <aside class="col-md-3">
-                    <div class="sidebar">
-                        <div class="widget-menu">
-                            <div class="widget-search-bar">
-                                <form role="search" th:action="@{/search/}" method="get" class="d-flex">
-                                    <input class="search-field" name="key" placeholder="Search" type="search">
-                                        <div class="search-icon bg-dark">
-                                            <a type="submit">
-                                                <svg class="search text-light">
-                                                    <use xlink:href="#search"></use>
-                                                </svg>
-                                            </a>
+                            <div class="col-lg-6 col-md-7">
+                                <div class="row d-flex">
+                                    <div class="col-md-6">
+                                        <div class="qty-field">
+                                            <div class="qty-number d-flex">
+                                                <div class="quntity-button incriment-button">-</div>
+                                                <input type="hidden" name="idCart" th:value="${cartitem.id}" />
+                                                <input class="spin-number-output bg-light no-margin" name="quantityCart" type="text" th:value="${cartitem.quantity}">
+                                                <div class="quntity-button decriment-button">+</div>
+                                            </div>
+                                            <div class="regular-price"></div>
+                                            <div class="quantity-output text-center bg-primary"></div>
                                         </div>
-                                </form>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="total-price">
+                                            <span class="money" style="font-size: 40px; color: red;" th:text="${cartitem.total1price}+₫">4.450.000₫</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-1 col-md-2">
+                                <div class="cart-remove">
+                                    <a th:href="@{/cart/clear/{id} (id=${cartitem.id})}">
+                                        <svg class="close" width="38px">
+                                            <use xlink:href="#close"></use>
+                                        </svg>
+                                    </a>
+                                </div>
                             </div>
                         </div>
-                        <div class="widget-product-categories pt-5">
-                            <h5 class="widget-title text-decoration-underline text-uppercase">Categories</h5>
-                            <ul class="product-categories sidebar-list list-unstyled">
-                                <li class="cat-item">
-                                    <a th:href="@{/san-pham/tat-ca-san-pham}">All</a>
-                                </li>
-                                <li class="cat-item">
-                                    <a th:href="@{/san-pham/danh-muc-san-pham/{type} (type=1)}">Bàn phím</a>
-                                </li>
-                                <li class="cat-item">
-                                    <a th:href="@{/san-pham/danh-muc-san-pham/{type} (type=2)}">Chuột máy tính</a>
-                                </li>
-                                <li class="cat-item">
-                                    <a th:href="@{/san-pham/danh-muc-san-pham/{type} (type=3)}">Tai nghe</a>
-                                </li>
-                            </ul>
-                        </div>
-                       
                     </div>
-                </aside>
-            </div>
-        </div>
-    </div>
-
-    <section id="yearly-sale" class="bg-light-blue overflow-hidden mt-5 padding-xlarge" style="background-image: url('images/sony-banner.png');background-position: right; background-repeat: no-repeat;">
-        <div class="row d-flex flex-wrap align-items-center">
-            <div class="col-md-6 col-sm-12">
-                <div class="text-content offset-4 padding-medium">
-                    <h3>16% off</h3>
-                    <h2 class="display-2 pb-5 text-uppercase text-dark">Hires Sony</h2>
-                    <h2>MDR-1AM2</h2>
+                   
+                </div>
+                <div class="cart-totals bg-grey padding-medium">
+                    <h2 class="display-7 text-uppercase text-dark pb-4">Cart Totals</h2>
+                    <div class="total-price pb-5">
+                        <table cellspacing="0" class="table text-uppercase">
+                            <tbody>
+                                <tr class="order-total pt-2 pb-2 border-bottom">
+                                    <th>Tổng tiền</th>
+                                    <td data-title="Total">
+                                        <span class="price-amount amountps-5" style="font-size: 20px;">
+                                                <span class="price-currency-symbol" style="color: red" th:text="${totalPrice}">14.690.000₫</span>
+                                        </span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="button-wrap" th:if="${session.cartCount > 0}">
+                        <button class="btn btn-black btn-medium text-uppercase me-2 mb-3 btn-rounded-none">Cập nhật giỏ hàng</button>
+                        <a type="submit" th:href="@{/san-pham/tat-ca-san-pham}" class="btn btn-black btn-medium text-uppercase me-2 mb-3 btn-rounded-none">Tiếp tục mua sắm</a>
+                        <a type="submit" th:href="@{/cart/payment}" class="btn btn-black btn-medium text-uppercase mb-3 btn-rounded-none">Thanh toán</a>
+                    </div>
                 </div>
             </div>
-            <div class="col-md-6 col-sm-12">
-                
-            </div>
-        </div>
+        </form>
     </section>
 
     <br><br><br>
@@ -528,10 +518,10 @@
         </div>
         <hr>
     </footer>
-    <script th:src="@{/js/jquery-1.11.0.min.js}"></script>
+    <script src="js/jquery-1.11.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
-    <script type="text/javascript" th:src="@{/js/bootstrap.bundle.min.js}"></script>
-    <script type="text/javascript" th:src="@{/js/plugins.js}"></script>
-    <script type="text/javascript" th:src="@{/js/script.js}"></script>
+    <script type="text/javascript" src="js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" src="js/plugins.js"></script>
+    <script type="text/javascript" src="js/script.js"></script>
 </body>
 </html>

@@ -15,7 +15,7 @@ public class HOA_DON {
     @Column(name = "NgayLap")
     private LocalDate NgayLap;
     @Column(name = "TongHoaDon")
-    private Float TongHoaDon;
+    private Double TongHoaDon;
     @Column(name = "TinhTrangTT", length = 50)
     private String TinhTrangTT;
     @Column(name = "TinhTrangDH", length = 50)

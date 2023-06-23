@@ -295,8 +295,8 @@
                             </select>
                         </div>
                     </div>
-                    <div class="product-content product-store d-flex justify-content-between flex-wrap" >
-                        <div class="col-lg-4 col-md-6" th:each="product:${listproduct}">
+                    <div class="product-content product-store d-flex justify-content-between flex-wrap">
+                        <div class="col-lg-4 col-md-6"  th:each="product:${listproduct}">
                             <div class="product-card position-relative pe-3 pb-3">
                                 <div class="image-holder">
                                     <a th:href="@{/san-pham/thong-tin-san-pham?id={id} (id=${product.MaSP})}"><img th:src="@{/images/} + ${product.HinhAnhSP}" alt="product-item" class="img-fluid"></a>
@@ -323,17 +323,17 @@
                     <nav class="navigation paging-navigation text-center padding-medium" role="navigation" th:if="${totalPages > 1}">
                         <ul class="pagination loop-pagination d-flex justify-content-center align-items-center" >
                             <li class="page-numbers pe-3" th:class="${listproduct.hasPrevious() ? '' : 'disabled'}">
-                                <a th:href="@{/san-pham/danh-muc-san-pham/__${type}__?page=__${listproduct.number-1}__}" aria-label="Previous">
+                                <a th:href="@{/san-pham/tat-ca-san-pham?page=__${listproduct.number-1}__}" aria-label="Previous">
                                     <svg class="chevron-left pe-3" >
                                         <use xlink:href="#chevron-left"></use>
                                     </svg>
                                 </a>
                             </li>
                             <li class="page-numbers pe-3" th:each="page : ${#numbers.sequence(0, totalPages - 1)}" th:class="${listproduct.number == page ? 'current' : ''}">
-                                <a class="page-numbers pe-3" th:href="@{/san-pham/danh-muc-san-pham/__${type}__?page=__${page}__}" th:text="${page + 1}"></a>
+                                <a class="page-numbers pe-3" th:href="@{/san-pham/tat-ca-san-pham?page=__${page}__}" th:text="${page + 1}"></a>
                             </li>
                             <li class="page-numbers pe-3" th:class="${listproduct.hasNext() ? '' : 'disabled'}">
-                                <a th:href="@{/san-pham/danh-muc-san-pham/__${type}__?page=__${listproduct.number+1}__}" aria-label="Next">
+                                <a th:href="@{/san-pham/tat-ca-san-pham?page=__${listproduct.number+1}__}" aria-label="Next">
                                     <svg class="chevron-right ps-3">
                                         <use xlink:href="#chevron-right"></use>
                                     </svg>
@@ -368,13 +368,13 @@
                             <div class="widget-search-bar">
                                 <form role="search" th:action="@{/search/}" method="get" class="d-flex">
                                     <input class="search-field" name="key" placeholder="Search" type="search">
-                                        <div class="search-icon bg-dark">
-                                            <a type="submit">
-                                                <svg class="search text-light">
-                                                    <use xlink:href="#search"></use>
-                                                </svg>
-                                            </a>
-                                        </div>
+                                    <div class="search-icon bg-dark">
+                                        <a type="submit">
+                                            <svg class="search text-light">
+                                                <use xlink:href="#search"></use>
+                                            </svg>
+                                        </a>
+                                    </div>
                                 </form>
                             </div>
                         </div>

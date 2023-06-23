@@ -1,5 +1,6 @@
 package DoAnJava.Webtest.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,8 +25,16 @@ public class HomeService {
 
     public List<SAN_PHAM> GetAllProductFromType(int loai) { // Lấy sản phẩm theo loại
         LOAI_SP type = loai_SP_Repository.findById(loai).get();
-        return (List<SAN_PHAM>) sanphamrepository.findAll().stream()
+        List<SAN_PHAM> products = (List<SAN_PHAM>) sanphamrepository.findAll().stream()
                 .filter(x -> x.getMaLoai() == type)
                 .toList();
+
+        // Limit results to 4
+        // List<SAN_PHAM> limitedProducts = new ArrayList<>();
+        // for (int i = 0; i < 10 && i < products.size(); i++) {
+        // limitedProducts.add(products.get(i));
+        // }
+
+        return products;
     }
 }
