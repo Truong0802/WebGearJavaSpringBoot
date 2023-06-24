@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/customers-admin.css}">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <title>Document</title>
+</head>
+<body>
+    <div class="container">
+        <div class="navigation">
+            <ul>
+                <li>
+                    <a href="#">
+                        <span class="icon"><ion-icon name="storefront"></ion-icon></span>
+                        <span class="title">Shop name</span>
+                    </a>
+                </li>
+                <li>
+                    <a  href="/admin-page">
+                        <span class="icon"><ion-icon name="home-outline"></ion-icon></span>
+                        <span class="title">Trang chủ</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="active" href="/admin-page/danh-sach-khach-hang">
+                        <span class="icon"><ion-icon name="people-outline"></ion-icon></span>
+                        <span class="title">Khách hàng</span>
+                    </a>
+                </li>
+                <li>
+                    <a th:href="@{/admin-page/danh-sach-nhan-vien}">
+                        <span class="icon"><ion-icon name="man-outline"></ion-icon></span>
+                        <span class="title">Nhân viên</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/admin-page/danh-muc-san-pham">
+                        <span class="icon"><ion-icon name="reorder-four-outline"></ion-icon></span>
+                        <span class="title">Danh mục sản phẩm</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/admin-page/danh=sach-san-pham">
+                        <span class="icon"><i class='bx bx-box'></i></span>
+                        <span class="title">Sản phẩm</span>
+                    </a>
+                </li>
+                <li>
+                    <a sec:logout th:href="@{/logout}">
+                        <span class="icon"><ion-icon name="log-out-outline"></ion-icon></span>
+                        <span class="title">Đăng xuất</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+
+        <!-- main -->
+        <div class="main">
+            <div class="topbar">
+                <div class="toggle">
+                    <ion-icon name="menu-outline"></ion-icon>
+                </div>
+                <!-- <div class="search">
+                    <label>
+                        <input type="text" placeholder = "Search here">
+                        <ion-icon name="search-outline"></ion-icon>
+                    </label>
+                </div> -->
+            </div>
+
+            <!-- product category -->
+            <div class="detail">
+                <div class="recentCustomers">
+                    <div class="cardHeader">
+                        <h2>Danh sách khách hàng</h2>
+                    </div>
+                    
+                    <table>
+                        <thead>
+                            <tr>
+                                <td>Tên tài khoản</td>
+                                <td>Họ tên khách hàng</td>
+                                <td>Email</td>
+                                <td>Số điện thoại</td>
+                            </tr>
+                        </thead>
+                        <tbody th:each="list : ${listKH}">
+                            <tr>
+                                <td th:text="${list.username.username}">khachang01</td>
+                                <td th:text="${list.HoTenKH}">Trần Nguyên Trường</td>
+                                <td th:text="${list.Email}">truong123@gmail.com</td>
+                                <td th:text="${list.SDT}">0369715651</td>
+                                <td><a th:href="@{/admin-page/thong-tin-khach-hang?id={id} (id= ${list.MaKH})}">Chi tiết</a></td>
+                            </tr>
+                        </tbody>
+                        
+                    </table>
+                    <div class="pagination" th:if="${totalPages > 1}">
+                        <a th:class="${listKH.hasPrevious() ? '' :'disabled'}" th:href="@{/admin-page/danh-sach-khach-hang?page=__${listKH.number-1}__}" >    
+                            <ion-icon name="arrow-back-outline"></ion-icon>
+                        </a>
+                    <a th:each="page : ${#numbers.sequence(0,totalPages - 1)}" th:href="@{/admin-page/danh-sach-khach-hang?page=__${page}__}" th:text="${page + 1}"></a>
+                    <a th:class="${listKH.hasNext() ? '' : 'disabled'}"  th:href="@{/admin-page/danh-sach-khach-hang?page=__${listKH.number+1}__}">
+                        <ion-icon name="arrow-forward-outline"></ion-icon>
+                    </a>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script th:src = "@{/js/admin-script.js}"></script>
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</body>
+</html>

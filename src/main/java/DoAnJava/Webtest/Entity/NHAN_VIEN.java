@@ -22,9 +22,9 @@ public class NHAN_VIEN {
     @Column(name = "Email", length = 50)
     private String Email;
 
-    @ManyToOne
-    @JoinColumn(name = "role_id", referencedColumnName = "role_id")
-    private role role_id;
+    // @ManyToOne
+    // @JoinColumn(name = "role_id", referencedColumnName = "role_id")
+    // private role role_id;
 
     @ManyToOne
     @JoinColumn(name = "username", referencedColumnName = "username")

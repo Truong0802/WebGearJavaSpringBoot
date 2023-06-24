@@ -114,6 +114,13 @@ public class CartService {
             SAN_PHAM sp = san_PHAM_Repository.findAll().stream()
                     .filter(x -> x.getTenSP().toLowerCase().contains(cartItem.getName().toLowerCase())).findFirst()
                     .orElse(null);
+            if (sp.getSLTruyCap() == null) {
+                sp.setSLTruyCap(0 + 1);
+            } else {
+                sp.setSLTruyCap(sp.getSLTruyCap() + 1);
+            }
+
+            sp.setSoLuong(sp.getSoLuong() - cartItem.getQuantity());
             compositeKey.setMaHD(order.getMaHD());
             compositeKey.setMaSP(sp.getMaSP());
             orderDetail.setID(compositeKey);

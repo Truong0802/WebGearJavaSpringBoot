@@ -42,7 +42,7 @@ public class SecurityConfig {
                         .requestMatchers("/login/**", "/logout/**").permitAll()
                         .requestMatchers("/**").permitAll()
                         .requestMatchers("/thong-tin-ca-nhan/**").hasAnyAuthority("USER")
-                        .requestMatchers("/admin/**").hasAnyAuthority("ADMIN")
+                        .requestMatchers("/admin-page/**").hasAnyAuthority("ADMIN")
                         .anyRequest().authenticated())
                 // .formLogin(withDefaults())
                 .formLogin(formLogin -> formLogin

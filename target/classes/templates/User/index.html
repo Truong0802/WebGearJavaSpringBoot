@@ -224,7 +224,7 @@
                                                 <li sec:authorize="isAuthenticated()">
                                                     <a sec:authorize="hasAnyAuthority('USER')" th:href="@{/thong-tin-ca-nhan?uid={uid} (uid=${#authentication.name} ) }" class="dropdown-item">Thông tin</a>
                                     
-                                                    <a sec:authorize="hasAnyAuthority('ADMIN')" href="/admin-page" class="dropdown-item">Quản lý</a>
+                                                    <a sec:authorize="hasAnyAuthority('ADMIN')" th:href="@{/admin-page}" class="dropdown-item">Quản lý</a>
                                                     <a sec:logout th:href="@{/logout}" class="dropdown-item">Đăng xuất</a>
                                                 </li>
                                                 <li sec:authorize="!isAuthenticated()">
