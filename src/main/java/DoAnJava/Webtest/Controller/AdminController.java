@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import DoAnJava.Webtest.Entity.CT_HD;
 import DoAnJava.Webtest.Entity.HOA_DON;
 import DoAnJava.Webtest.Entity.KHACH_HANG;
 import DoAnJava.Webtest.Entity.LOAI_SP;
@@ -274,5 +275,16 @@ public class AdminController {
 
         adminService.edit(editProduct);
         return "redirect:/admin-page/danh=sach-san-pham";
+    }
+
+    @GetMapping("/hoa-don")
+    public String hoadon(@RequestParam(name = "id") String id, Model model) {
+        HOA_DON getmahd = adminService.checkhoadon(id);
+        model.addAttribute("info", getmahd);
+        List<CT_HD> getlistsp = adminService.getCTHD(getmahd);
+        model.addAttribute("BoughtList", getlistsp);
+        Double total = getmahd.getTongHoaDon();
+        model.addAttribute("totalprice", total);
+        return "Admin/Product/invoice-admin.html";
     }
 }

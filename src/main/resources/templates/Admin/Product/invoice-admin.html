@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/invoice-admin.css}">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <title>Document</title>
+</head>
+<body>
+    <div class="container">
+        <div class="navigation">
+            <ul>
+                <li>
+                    <a href="#">
+                        <span class="icon"><ion-icon name="storefront"></ion-icon></span>
+                        <span class="title">Shop name</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="active" href="/admin-page">
+                        <span class="icon"><ion-icon name="home-outline"></ion-icon></span>
+                        <span class="title">Trang chủ</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/admin-page/danh-sach-khach-hang">
+                        <span class="icon"><ion-icon name="people-outline"></ion-icon></span>
+                        <span class="title">Khách hàng</span>
+                    </a>
+                </li>
+                <li>
+                    <a th:href="@{/admin-page/danh-sach-nhan-vien}">
+                        <span class="icon"><ion-icon name="man-outline"></ion-icon></span>
+                        <span class="title">Nhân viên</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/admin-page/danh-muc-san-pham">
+                        <span class="icon"><ion-icon name="reorder-four-outline"></ion-icon></span>
+                        <span class="title">Danh mục sản phẩm</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/admin-page/danh=sach-san-pham">
+                        <span class="icon"><i class='bx bx-box'></i></span>
+                        <span class="title">Sản phẩm</span>
+                    </a>
+                </li>
+                <li>
+                    <a sec:logout th:href="@{/logout}">
+                        <span class="icon"><ion-icon name="log-out-outline"></ion-icon></span>
+                        <span class="title">Đăng xuất</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- main -->
+        <div class="main">
+            <div class="topbar">
+                <div class="toggle">
+                    <ion-icon name="menu-outline"></ion-icon>
+                </div>
+                <!-- <div class="search">
+                    <label>
+                        <input type="text" placeholder = "Search here">
+                        <ion-icon name="search-outline"></ion-icon>
+                    </label>
+                </div> -->
+            </div>
+            <a href="#" class = "btn" id = "download">In hóa đơn</a>
+            <div class="detail" id="invoice">
+                <div class="invoice">
+                    <div class="container">
+                        <div class="row pad-top-botm ">
+                            <div class="col-lg-6 col-md-6 col-sm-6 ">
+                                <div class="cardHeader">
+                                    <img src="/images/logo-vz.png" width="100" style="padding-bottom: 20px;">
+                                    
+                                </div>
+                                
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                <strong>Vz Team</strong>
+                                <br>
+                                <b>Địa chỉ :</b> VQ4P+249, Phường Tân Phú, Quận 9, TP.Hồ Chí Minh
+                            </div>
+                        </div>
+                        <div class="row text-center contact-info">
+                            <div class="col-lg-12 col-md-12 col-sm-12">
+                                <hr>
+                                <span>
+                                    <strong>E-mail : </strong> nh6pcgear@gmail.com </span>
+                                <span>
+                                    <strong>SĐT : </strong> +0562403407 </span>
+                                <hr>
+                            </div>
+                        </div>
+                        <div class="row pad-top-botm client-info" th:object="${info}">
+                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                <br>
+                                <h4>
+                                <strong>Thông tin khách hàng</strong>
+                                </h4>
+                                <b>Họ tên :</b> <span th:text="*{MaKH.HoTenKH}"></span> <br>
+                                <b>Địa chỉ :</b> <span th:text="*{MaKH.DiaChi}"></span> <br>
+                                <b>SĐT :</b> <span th:text="*{MaKH.SDT}"></span> <br>
+                                <b>E-mail :</b> <span th:text="*{MaKH.Email}"></span><br>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-sm-6">
+                                <br>
+                                <h4>
+                                <strong>Thông tin thanh toán </strong>
+                                </h4>
+                                <b>Tổng tiền : <span th:text="*{TongHoaDon}+đ"></span> </b>
+                                <br>Ngày: <span th:text="*{NgayLap}"></span> <br>
+                                <b>Tình trạng thanh toán: <span th:text="*{TinhTrangTT}"></span></b>
+                                <br>Phương thức thanh toán: COD
+                            </div>
+                        </div>
+
+                        <div class="list-product">
+                            <div class="table-responsive">
+                                <table class="table table-striped table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <td>Tên sản phẩm</td>
+                                            
+                                            <td>Số lượng</td>
+                                            <td>Giá sản phẩm</td>
+                                            <td>Giá khuyến mãi</td>
+                                            <td>Tổng số tiền</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody th:each="list:${BoughtList}">
+                                        <tr>
+                                            <td th:text="${list.MaSP.TenSP}">Kit V65</td>
+                                           
+                                            <td th:text="${list.SoLuong}">10</td>
+                                            <td th:text="${list.MaSP.Gia}+đ">2.150.000đ</td>
+                                            <td th:text="${list.MaSP.Gia}+đ">1.935.000đ</td>
+                                            <td th:text="${list.TongGia}+đ">21.285.000đ</td>
+                                        </tr>
+                                    </tbody>
+                                    
+                                </table>
+                                </div>
+                                <hr>
+                                <div class="ttl-amts">
+                                    <h5> Tổng tiền : <span th:text="${totalprice}+đ"></span> </h5>
+                                </div>
+                                <hr>
+                                <div class="ttl-amts">
+                                    <h5> Phí vận chuyển: miễn phí </h5>
+                                </div>
+                                <hr>
+                                <div class="ttl-amts">
+                                    <h5> Voucher: Đang cập nhật...</h5>
+                                </div>
+                                <hr>
+                                <div class="ttl-amts">
+                                    <h4>
+                                    <strong>Tổng hóa đơn: <span th:text="${totalprice}+đ"></span></strong>
+                                </h4>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+            
+            </div>
+            
+        </div>
+    </div>
+
+    
+    <script th:src = "@{/js/admin-script.js}"></script>
+    <script src="https://raw.githack.com/eKoopmans/html2pdf/master/dist/html2pdf.bundle.js"></script>
+    <script th:src = "@{/js/invoice-download.js}"></script>
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</body>
+</html>

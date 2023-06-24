@@ -116,15 +116,19 @@
                                 <td>Giá</td>
                                 <td>Tình trạng thanh toán</td>
                                 <td>Tình trạng đơn hàng</td>
+                                <td>Tác vụ</td>
                             </tr>
                         </thead>
                         <tbody th:each="listorder : ${listHD}">
+                        
                             <tr>
-                                <td th:text="${listorder.MaHD}">Kit V65</td>
+                               <td th:text="${listorder.MaHD}" ></td> 
                                 <td th:text="${listorder.TongHoaDon}">2.150.000đ</td>
                                 <td th:text="${listorder.TinhTrangTT}">Đã thanh toán</td>
                                 <td><span class = "status delivered" th:text="${listorder.TinhTrangDH}">Đã giao hàng</span></td>
+                                <td><a class = "btn" th:href="@{/admin-page/hoa-don?id={id} (id=${listorder.MaHD})}" >In</a></td>
                             </tr>
+                       
                         </tbody>
 
                     </table>

@@ -9,6 +9,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import DoAnJava.Webtest.Entity.CHUC_VU;
+import DoAnJava.Webtest.Entity.CT_HD;
+import DoAnJava.Webtest.Entity.CT_HDCompositeKey;
 import DoAnJava.Webtest.Entity.HOA_DON;
 import DoAnJava.Webtest.Entity.KHACH_HANG;
 import DoAnJava.Webtest.Entity.LOAI_SP;
@@ -17,6 +19,7 @@ import DoAnJava.Webtest.Entity.SAN_PHAM;
 import DoAnJava.Webtest.Entity.TAI_KHOAN;
 import DoAnJava.Webtest.Entity.THUONG_HIEU;
 import DoAnJava.Webtest.Entity.role;
+import DoAnJava.Webtest.Repository.CT_HD_Repository;
 import DoAnJava.Webtest.Repository.HOA_DON_Repository;
 import DoAnJava.Webtest.Repository.KHACH_HANG_Repository;
 import DoAnJava.Webtest.Repository.LOAI_SP_Repository;
@@ -45,6 +48,8 @@ public class AdminService {
     THUONG_HIEU_Repository thuong_HIEU_Repository;
     @Autowired
     LOAI_SP_Repository loai_SP_Repository;
+    @Autowired
+    CT_HD_Repository ct_HD_Repository;
 
     public Long TongDoanhThu() {
         Double total = hoa_DON_Repository.findAll().stream()
@@ -178,5 +183,15 @@ public class AdminService {
             find.setHinhAnhSP(editProduct.getHinhAnhSP());
             san_PHAM_Repository.save(find);
         }
+    }
+
+    public HOA_DON checkhoadon(String id) {
+        return hoa_DON_Repository.findAll().stream().filter(x -> x.getMaHD().equals(id)).findFirst().orElseThrow();
+    }
+
+    public List<CT_HD> getCTHD(HOA_DON maHD) {
+        List<CT_HD> listCT = ct_HD_Repository.findAll().stream()
+                .filter(x -> x.getID().getMaHD().equals(maHD.getMaHD())).toList();
+        return listCT;
     }
 }
