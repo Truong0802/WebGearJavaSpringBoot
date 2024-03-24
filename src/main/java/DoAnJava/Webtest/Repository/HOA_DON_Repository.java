@@ -6,5 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface HOA_DON_Repository extends JpaRepository<HOA_DON, Integer> {
+public interface HOA_DON_Repository extends JpaRepository<HOA_DON, String> {
 }
