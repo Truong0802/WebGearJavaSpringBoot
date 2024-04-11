@@ -23,10 +23,23 @@ public class SearchController {
     public String search(Model model, @RequestParam(name = "key") String key,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "4") int size) {
-        Page<SAN_PHAM> products = productService.GetProductBySearch(key, page, size);
-        model.addAttribute("key", key);
-        model.addAttribute("listproduct", products);
-        model.addAttribute("totalPages", products.getTotalPages());
+        if(key.isEmpty()) {
+            model.addAttribute("error", "Tìm kiếm rỗng");
+        }
+        else
+        {
+            Page<SAN_PHAM> products = productService.GetProductBySearch(key, page, size);
+            if(products.isEmpty())
+            {
+                model.addAttribute("error", "Mặt hàng không tồn tại");
+            }
+           else
+           {
+            model.addAttribute("key", key);
+            model.addAttribute("listproduct", products);
+            model.addAttribute("totalPages", products.getTotalPages());
+           }
+        }
         return "Product/Search.html";
     }
 }

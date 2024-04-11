@@ -151,9 +151,10 @@
                                 <div class="widget-menu">
                                     <div class="widget-search-bar">
                                         <form role="search" th:action="@{/search/}" method="get" class="d-flex">
-                                            <input class="search-field" name="key" placeholder="Search" type="search">
+                                            <input class="search-field" name="key" th:if="${error == null}" placeholder="Search" type="search" >
+                                            <input class="search-field" name="key" th:if="${error != null}" th:placeholder="${error}" type="search">
                                             <div class="search-icon bg-dark">
-                                                <a href="#">
+                                                <a href="">
                                                     <svg class="search text-light">
                                                         <use xlink:href="#search"></use>
                                                     </svg>

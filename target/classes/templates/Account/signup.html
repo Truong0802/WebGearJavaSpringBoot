@@ -8,6 +8,7 @@
     <link rel="stylesheet" th:href="@{/css/login-style.css}">
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
     <link rel="stylesheet" th:href="@{/fonts/fontawesome-free-6.2.1-web/fontawesome-free-6.2.1-web/css/all.css}">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <title>Document</title>
 </head>
 <body>
@@ -25,6 +26,9 @@
         
         <div class = "signup-or"><span>OR</span></div>
             <form class="bg-light p-4 my-3"  th:action="@{/signup/}" method="post">
+                <div class="alert alert-danger" th:if="${error != null}">
+                    <strong>Error!</strong> <span th:text="${error}"></span>
+                </div>
                 <div class = "form-group">
                     <label for="fullname"  class="signup-label">Họ tên người dùng</label>
                     <input type="text" name="fullname" class="signup-input" placeholder = "Họ tên người dùng" id = "fullname">

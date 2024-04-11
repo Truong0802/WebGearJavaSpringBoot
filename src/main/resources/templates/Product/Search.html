@@ -6,6 +6,7 @@
     <link rel="stylesheet" th:href="@{/css/style.css}">
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <title>Trang Danh Sách Sản Phẩm</title>
 </head>
 <body data-bs-spy="scroll" data-bs-target="#navbar" data-bs-root-margin="0px 0px -40%" data-bs-smooth-scroll="true" tabindex="0">
@@ -151,7 +152,8 @@
                                 <div class="widget-menu">
                                     <div class="widget-search-bar">
                                         <form role="search" th:action="@{/search/}" method="get" class="d-flex">
-                                            <input class="search-field" name="key" placeholder="Search" type="search">
+                                            <input class="search-field" name="key" th:if="${error == null}" placeholder="Search" type="search" >
+                                            <input class="search-field" name="key" th:if="${error != null}" th:placeholder="${error}" type="search">
                                             <div class="search-icon bg-dark">
                                                 <a href="#">
                                                     <svg class="search text-light">
@@ -294,6 +296,9 @@
                                 <option value="">Model (Z - A)</option>    -->
                             </select>
                         </div>
+                    </div>
+                    <div class="alert alert-danger" th:if="${error != null}">
+                        <strong>Error!</strong> <span th:text="${error}"></span>
                     </div>
                     <div class="product-content product-store d-flex justify-content-between flex-wrap" >
                         <div class="col-lg-4 col-md-6" th:each="product:${listproduct}">

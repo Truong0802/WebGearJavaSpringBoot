@@ -52,22 +52,51 @@ public class AccountController {
             @RequestParam(name = "password") String mk, @RequestParam(name = "fullname") String HoTen,
             @RequestParam(name = "email") String email, @RequestParam(name = "phonenumber") String phonenumber,
             @RequestParam(name = "address") String address) {
-        TAI_KHOAN taikhoan = new TAI_KHOAN();
-        taikhoan.setUsername(tk);
-        taikhoan.setPassword(mk);
-        KHACH_HANG khachhang = new KHACH_HANG();
-        khachhang.setUsername(taikhoan);
-        khachhang.setDiaChi(address);
-        khachhang.setEmail(email);
-        khachhang.setHoTenKH(HoTen);
-        khachhang.setSDT(phonenumber);
-        System.out.println("taikhoan:" + tk);
-        System.out.println("matkhau" + mk);
-        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        String encodedPassword = passwordEncoder.encode(taikhoan.getPassword());
-        taikhoan.setPassword(encodedPassword);
-        accountService.addUserWithRole(taikhoan, khachhang);
-        return "redirect:/login";
+        if(tk.isEmpty())
+        {
+            model.addAttribute("error","Tài khoản không được rỗng");
+            
+        }
+        else if(mk.isEmpty())
+        {
+            model.addAttribute("error","Mật khẩu không được rỗng");
+        }
+        else if(HoTen.isEmpty())
+        {
+            model.addAttribute("error","Tên khách hàng không được rỗng");
+        }
+        else if(email.isEmpty())
+        {
+            model.addAttribute("error","Email không được rỗng");
+        }
+        else if(phonenumber.isEmpty())
+        {
+            model.addAttribute("error","SĐT không được rỗng");
+        }
+        else if(address.isEmpty())
+        {
+            model.addAttribute("error","không được rỗng địa chỉ");
+        }
+        else
+        {
+            TAI_KHOAN taikhoan = new TAI_KHOAN();
+            taikhoan.setUsername(tk);
+            taikhoan.setPassword(mk);
+            KHACH_HANG khachhang = new KHACH_HANG();
+            khachhang.setUsername(taikhoan);
+            khachhang.setDiaChi(address);
+            khachhang.setEmail(email);
+            khachhang.setHoTenKH(HoTen);
+            khachhang.setSDT(phonenumber);
+            System.out.println("taikhoan:" + tk);
+            System.out.println("matkhau" + mk);
+            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+            String encodedPassword = passwordEncoder.encode(taikhoan.getPassword());
+            taikhoan.setPassword(encodedPassword);
+            accountService.addUserWithRole(taikhoan, khachhang);
+            return "redirect:/login";
+        }
+        return "Account/signup";
     }
 
     @GetMapping("/thong-tin-ca-nhan") // Thông tin khách hàng
